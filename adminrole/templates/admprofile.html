@@ -1,0 +1,1108 @@
+{% extends 'default.html' %}
+{% load static %}
+ {% block title %} {% for i in adm2 %} Admin {{i.name}} {% endfor %} {% endblock %}
+ {% block content %} {% endblock %}
+  {% block menu1 %} {% endblock %}
+ {% block adminmenu %}
+{% include 'hidden.html' %}
+  <a href="#" class="active" id="home"><i class="fa fa-home faicon" aria-hidden="true"></i> Home</a>
+  <a href="#" id="btncontact"><i class="fa fa-phone faicon" aria-hidden="true"></i> Contact</a>
+  <a href="#" id="btncourse"><i class="fa fa-book" aria-hidden="true"></i> Courses</a>
+  <a href="#" id="btninfo"><i class="fa fa-info-circle faicon" aria-hidden="true"></i> Info</a>
+  <a href="javascript:void(0);" class="icon" onclick="myFunction()"><i class="fa fa-bars"></i></a>
+   {% for i in adm2 %} 
+  
+    <span style="float: right;"> <a href="#"><img class="rounded-2 m-0 p-0" id="admimg" src="{{i.image}}" height="23px"></a></span>
+
+    <span style="float: right;" type="button"  data-bs-toggle="dropdown" aria-expanded="false"> <a href="#">{{i.name}} Admin</a></span>
+      <ul class="dropdown-menu border-0 text-center rounded rounded-3" style="background-color:#bac7e0">
+   <li><a class="dropdown-item rounded rounded-3 badge-danger" style="color:black; font-size:20px;" href="/admpass?email={{i.email}}">Change Password</a></li>
+      <li><a class="dropdown-item rounded rounded-3 badge-danger" style="color:black; font-size:20px;" href="/uploadadmimg?email={{i.email}}">Update Image</a></li>
+          <li><a class="dropdown-item rounded rounded-3 badge-danger" style="color:black; font-size:20px;" href="logout_view">Logout</a></li>
+        </ul></span>
+        <span style="float: right;"><a href="#" onClick="window.location.reload(true)">Refresh</a></span>     
+        {% endfor %}  
+   {% endblock %}
+
+{% block adminbody %}
+<div id="menuoption" class="container-fluid align-items-stretch p-2">
+  <button id="btnmarks" class=" btn btn-outline-success p-1 mb-3" style="font-size:20px; margin-left: 10px; margin-right:10px;">Show Marks Detail</button>
+  <button id="btnentermark" class=" btn btn-outline-success p-1 pl-5 mb-3" style="font-size:20px; margin-right:5px;">Enter Marks</button>
+  <button id="btnstudent" class=" btn btn-outline-success rounded rounded-3 p-1 mb-3" style="font-size:20px; margin-right:5px;">Show Student Detail</button>
+  <button id="btnenroll" class=" btn btn-outline-success p-1 mb-3" style="font-size:20px;">Enroll New Student</button>
+  <button id="btnenfac"  class=" btn btn-outline-success rounded rounded-3 p-1 mb-3" style="font-size:20px; margin-left:5px;">Enroll Faculty</button>
+  <button id="btnshowfac"  class=" btn btn-outline-success rounded rounded-3 p-1 mb-3" style="font-size:20px; margin-left:5px;">Show Faculty Detail</button>
+  <button id="btnaddadmin"  class=" btn btn-outline-success rounded rounded-3 p-1 mb-3" style="font-size:20px; margin-left:5px;">Add Admin</button>
+  <button id="btnadmin"  class=" btn btn-outline-success rounded rounded-3 p-1 mb-3" style="font-size:20px; margin-left:5px;">Show Admin Detail</button>
+</div>
+
+{% for msg in messages %}
+ <h2 style="color:red">{{msg}} </h2>
+{% endfor %}
+<div id="marks">
+ <table id="tbl_exporttable_to_xls" class="table-bordered border-danger container-fluid" align="center">
+      <tr border="1px" align="center" style="background-color:black; color:white;">
+                      <td> ID</td>
+                      <td> Roll Number </td>
+                      <td>Branch </td>
+                      <td>Semester</td>
+                      <td>Subject</td>
+                      <td>Subject Code</td>
+                      <td>Full Marks</td>
+                      <td>Obtain Marks</td>
+                      <td>Pratical FM</td>
+                      <td>Prac Obt Marks</td>
+                      <td>Total Marks</td>
+                      <td>Result</td>
+                      <td>CGPA</td>
+                      <td>Result Date</td>
+                      <td>Email Id</td>
+                      <td colspan="2">Action</td>
+                      {% for i in sturec %}
+                      <tr border="2" align="center" style="background-color:white; margin: 20p; border-radius:black solid 20px;">  
+                        <td> {{i.id}}</td>
+                        <td> {{i.rollno}}</td>
+                        <td> {{i.branch}}</td>
+                        <td> {{i.semester}}</td>
+                        <td> {{i.subject}}</td>
+                        <td> {{i.subjectcode}}</td>
+                        <td> {{i.fullmark}}</td>
+                        <td> {{i.obtainmark}}</td>
+                        <td> {{i.pracfullmark}}</td>
+                        <td> {{i.pracobtmark}}</td>
+                        <td> {{i.totalmark}}</td>
+                        <td> {{i.result}}</td>
+                        <td> {{i.CGPA}}</td>
+                        <td> {{i.resultdate}}</td>
+                        <td> {{i.email}}</td>
+                        <td>
+                          <flex> 
+                            <a href="/modresult?ids={{i.id}}" class="btn btn-outline-success my-1 rounded-4" value="modifymarks" name="modifymarks" id="modify"> Modify </a>
+                          </td>
+                        </flex>
+                        <td>
+                          <dflex> 
+                            <a href="/deletemark?ids={{i.id}}" class="btn btn-outline-success my-1 rounded-4" value="deletemarks" name="deletemarks" id="delete"> Delete </a>
+                          </dflex>
+                        </td>
+                        {% endfor %}
+                    </table> 
+                    <button class="btn btn-outline-success my-1 rounded-4" onclick="ExportToExcel('xlsx')">Export table to excel</button>
+                  </div>
+
+<table id="form1" class="table-bordered border-danger container-fluid" align="center">
+      <tr border="1px" align="center" style="background-color:black; color:white;">
+                      <td> ID</td>
+                      <td> Roll Number </td>
+                      <td>First Name</td>
+                      <td>Last Name</td>
+                      <td>Father First Name </td>
+                      <td>Father Last Name </td>
+                      <td>Email ID</td>
+                      <td>Mobile No</td>
+                      <td>Date of Birth </td>
+                      <td>Gender</td>
+                      <td colspan="2">Action</td>
+                     {% for i in studrec %}
+                      <tr border="2" align="center" style="background-color:white; width: 100px; margin: 10p; border-radius:black solid 20px;">
+                        <td> {{i.id}}</td>
+                        <td> {{i.rollno}}</td>
+                        <td> {{i.name}}</td>
+                        <td> {{i.lastname}}</td>
+                        <td> {{i.fathername}}</td>
+                        <td> {{i.fatherlastname}}</td>
+                        <td> {{i.email}}</td>
+                        <td> {{i.mobileno}}</td>
+                        <td> {{i.dob}}</td>
+                        <td> {{i.gender}}</td>  
+                        <td>
+                          <flex> 
+                            <a href="/updaetstu?email={{i.email}}" class="btn btn-outline-success my-1 rounded-4" value="modifystu" name="modifystu" id="modify"> Modify </a>
+                          </td>
+                          <td>
+                          <dflex> 
+                            <a href="/deletestu?email={{i.email}}" class="btn btn-outline-success my-1 rounded-4" value="deletestu" name="deletestu" id="delete"> Delete </a>
+                          </dflex>
+                        </td>                      
+                        
+                    {% endfor %}                  
+                  </table> 
+
+                  <table  id="showfac" class=" container-fluid table-bordered border-danger" align="center">
+                  <tr border="1px" align="center"style="background-color:black; color:white;">
+                      <td>ID</td>
+                      <td>Name</td>
+                      <td>Email ID</td>
+                      <td>Mobile No</td>
+                      <td>Subject</td>
+                      <td colspan="2">Action</td>
+                      {% for i in fac2 %}
+                      <tr border="2" align="center" style="background-color:white; margin: 20p; border-radius:black solid 20px;">
+                        <td> {{i.id}}</td>
+                        <td> {{i.name}}</td>
+                        <td> {{i.email}}</td>
+                        <td> {{i.mobileno}}</td>
+                        <td> {{i.subject}}</td>
+                        <td>
+                          <flex> 
+                            <a href="/modfac?email={{i.email}}" class="btn btn-outline-success my-1 rounded-4" value="modifyfac" name="modifyfac" id="modify">Modify</a>
+                          </td>
+                          <td>
+                          <dflex> 
+                            <a href="/deletefac?email={{i.email}}" class="btn btn-outline-success my-1 rounded-4"  name="deletefac" id="delete">Delete</a>
+                          </dflex>
+                        </td>
+                    {% endfor %}                  
+                  </table> 
+                <table class="table" id="showadmin" align="center">
+                 <tr border="1px" align="center" style="background-color:black; color:white;">
+                      <td>ID</td>
+                      <td>Name</td>
+                      <td>Email ID</td>
+                      <td>Mobile No</td>
+                      <td colspan="2">Action</td>
+                      {% for i in adm3 %}
+                      <tr border="2" align="center" style="background-color:white; margin: 20p; border-radius:black solid 20px;">
+                        <td> {{i.id}}</td>
+                        <td> {{i.name}}</td>
+                        <td> {{i.email}}</td>
+                        <td> {{i.mobileno}}</td>
+                        <td>
+                          <flex> 
+                            <a href="/modadm?email={{i.email}}" class="btn btn-outline-success my-1 rounded-4" value="modifyadm" name="modifyadm" id="modify"> Modify </a>
+                          </td>
+                          <td>
+                          <dflex> 
+                            <a href="/deleteadm?email={{i.email}}" class="btn btn-outline-success my-1 rounded-4" value="deleteadm" name="deleteadm" id="delete"> Delete </a>
+                          </dflex>
+                        </td>
+                    {% endfor %}                  
+                  </table> 
+
+
+<!-----New Entry--------->
+ <script>
+
+        function ExportToExcel(type, fn, dl) {
+            var date=Date();
+            var elt = document.getElementById('tbl_exporttable_to_xls');
+            var wb = XLSX.utils.table_to_book(elt, { sheet: "sheet1" });
+            return dl ?
+                XLSX.write(wb, { bookType: type, bookSST: true, type: 'base64' }) :
+                XLSX.writeFile(wb, fn || ('Coaltech_Expence_Sheet'+date+'.' + (type || 'xlsx')));
+        }
+
+    </script>
+
+ <script type="text/javascript">
+
+ function validation6() 
+  {
+    var rollno=document.f6.rollno.value;
+    var rollno1=document.f6.rollno1.value;
+    var branch1=document.f6.branch1.value;
+    var semester=document.f6.semester.value;
+    var subject=document.f6.subject.value;
+    var subjectcode=document.f6.subjectcode.value; 
+    var fullmark=document.f6.fullmark.value;
+    var obtainmark=document.f6.obtainmark.value;
+    var pracfullmark=document.f6.pracfullmark.value;
+    var pracobtmark=document.f6.pracobtmark.value;
+    var totalmark=document.f6.totalmark.value;
+    var result=document.f6.result.value;
+    var CGPA=document.f6.CGPA.value;
+    var resultdate=document.f6.resultdate.value;
+    var space= /\s/g;
+    var check= space.test(rollno);
+
+   if(rollno=="")
+    {
+      alert("Please Enter Roll No");
+      document.f6.rollno.focus();
+      return false;
+    }
+    if(check)
+    {
+      alert("Space not Allowed");
+      document.f6.rollno.focus();
+      return false;
+    }
+
+    if(rollno1=="")
+    {
+      alert("Please Re-enter Roll No");
+      document.f6.rollno1.focus();
+      return false;
+    }
+    
+    if(rollno!=rollno1)
+    {
+      alert("Roll No does not match");
+      document.f6.rollno.value="";
+      document.f6.rollno1.value="";
+      document.f6.rollno.focus();
+      return false;
+    }
+
+if (branch1=="")
+  {
+    alert("Please Enter Branch");
+    document.f6.branch1.focus();
+    return false;
+  }
+
+
+  if(semester=="")
+  {
+    alert("Please enter Semester");
+    document.f6.semester.focus();
+    return false;
+  }
+
+
+    if(subject=="")
+  {
+    alert("Please enter Subject");
+    document.f6.subject.focus();
+    return false;
+  }
+   if(subjectcode=="")
+  {
+    alert("Please enter Subject Code");
+    document.f6.subjectcode.focus();
+    return false;
+  }
+
+   if (fullmark=="")
+  {
+    alert("Please enter Full Marks");
+    document.f6.fullmark.focus();
+    return false;
+  }
+
+    if(isNaN(fullmark))
+    {
+      alert("Enter Numeric value");
+      document.f6.fullmark.value="";
+      document.f6.fullmark.focus();
+      return false
+    }
+
+    if (obtainmark=="")
+  {
+    alert("Please enter Ontain Marks");
+    document.f6.obtainmark.focus();
+    return false;
+  }
+
+    if(isNaN(obtainmark))
+    {
+      alert("Enter Numeric value");
+      document.f6.obtainmark.value="";
+      document.f6.obtainmark.focus();
+      return false
+    }
+      
+  if (pracfullmark=="")
+  {
+    alert("Please enter Practical Full Marks");
+    document.f6.pracfullmark.focus();
+    return false;
+  }
+
+    if(isNaN(pracfullmark))
+    {
+      alert("Enter Numeric value");
+      document.f6.pracfullmark.value="";
+      document.f6.pracfullmark.focus();
+      return false
+    }
+      
+    if (pracobtmark=="")
+  {
+    alert("Please enter Pratical Obtain Marks");
+    document.f6.pracobtmark.focus();
+    return false;
+  }
+
+    if(isNaN(pracobtmark))
+    {
+      alert("Enter Numeric value");
+      document.f6.pracobtmark.value="";
+      document.f6.pracobtmark.focus();
+      return false
+    }
+    
+    if (totalmark=="")
+  {
+    alert("Please enter your Total Marks");
+    document.f6.totalmark.focus();
+    return false;
+  }
+
+    if(isNaN(totalmark))
+    {
+      alert("Enter Numeric value");
+      document.f6.totalmark.value="";
+      document.f6.totalmark.focus();
+      return false
+    }
+
+     if (result=="")
+  {
+    alert("Please enter your Fail/Pass");
+    document.f6.result.focus();
+    return false;
+  }
+    
+    if (CGPA=="")
+  {
+    alert("Please enter your CGPA");
+    document.f6.CGPA.focus();
+    return false;
+  }
+
+    if(isNaN(CGPA))
+    {
+      alert("Enter Numeric value");
+      document.f6.CGPA.value="";
+      document.f6.CGPA.focus();
+      return false
+    }
+     if (resultdate=="")
+     {
+    alert("Please enter Date of Result");
+    document.f6.resultdate.focus();
+    return false;
+    }
+  }
+</script>
+
+<script type="text/javascript">
+  function totalmarks() 
+  {
+    var a=document.f6.marks.value;
+    var b=document.f6.marks1.value;
+    var c=parseInt(a);
+    var d=parseInt(b);
+    var e=c+d;
+    document.getElementById("tot").value=e
+    alert("totalmarks added")
+  }
+</script>
+  <form id="entmark" name="f6" action="entermarks" method="POST" onsubmit="return validation6();">
+    {% csrf_token %}
+    <div class="container-sm bg-warning border-1 rounded rounded-4 pb-1 pt-2">
+                  <div class="d-flex flex-row align-items-center mb-0">
+                    <div class="form-outline flex-fill mb-4">
+                      <label class="form-label" for="form3Example1c" style="color:green;">Roll No</label><label class="form-label" for="form3Example1c" style="color:red;">*</label>
+                      <input type="text" name="rollno" class="form-control">
+                    </div>&#160 &#160
+                    <div class="form-outline flex-fill mb-4">
+                      <label class="form-label" for="form3Example1c" style="color:green;"> Confirm Roll No</label><label class="form-label" for="form3Example1c" style="color:red;">*</label>
+                      <input type="text" name="rollno1" class="form-control">
+                    </div>&#160 &#160
+                    <div class="form-outline flex-fill mb-4">
+                      <label class="form-label" for="form3Example1c" style="color:green;">Branch</label><label class="form-label" for="form3Example1c" style="color:red;">*</label>
+                      <input type="text" name="branch1" class="form-control">
+                    </div>&#160 &#160
+                    <div class="form-outline flex-fill mb-4">
+                      <label class="form-label" for="form3Example1c" style="color:green;">Semeter</label><label class="form-label" for="form3Example1c" style="color:red;">*</label>
+                      <div class="btn btn-light bg-transparent align-content-start">
+                      <select name="semester">
+                        <option></option>
+                        <option>First(I)</option>
+                        <option>Second(II)</option>
+                        <option>Third(III)</option>
+                        <option>Fourt(IV)</option>
+                        <option>Fifth(v)</option>
+                        <option>Sixth(VI)</option>
+                        <option>Seventh(VII)</option>
+                        <option>Eight(VIII)</option>
+                        </label>
+                      </select>
+                       </div>
+                    </div>&#160 &#160
+                     <div class="form-outline flex-fill mb-4">
+                      <label class="form-label" for="form3Example1c" style="color:green;">Subject</label><label class="form-label" for="form3Example1c" style="color:red;">*</label>
+                      <input type="text" name="subject" class="form-control">
+                    </div>&#160 &#160
+                  </div>
+          <!-----first Row---->
+                     <div class="d-flex flex-row align-items-center mb-0">
+                    <div class="form-outline flex-fill mb-4">
+                      <label class="form-label" for="form3Example1c" style="color:green;">Subject Code</label><label class="form-label" for="form3Example1c" style="color:red;">*</label>
+                      <input type="text" name="subjectcode" class="form-control">
+                    </div>&#160 &#160
+                    <div class="form-outline flex-fill mb-4">
+                      <label class="form-label" for="form3Example1c" style="color:green;">Full Marks</label><label class="form-label" for="form3Example1c" style="color:red;">*</label>
+                      <input type="text" name="fullmark" value="70" class="form-control">
+                    </div>&#160 &#160
+                    <div class="form-outline flex-fill mb-4">
+                      <label class="form-label" for="form3Example1c" style="color:green;">Obtain Marks</label><label class="form-label" for="form3Example1c" style="color:red;">*</label>
+                      <input type="text" name="obtainmark" id="marks" class="form-control" onblur="totalmarks();">
+                    </div>&#160 &#160
+                   <div class="form-outline flex-fill mb-4">
+                      <label class="form-label" for="form3Example1c" style="color:green;">
+                        Practical FM
+                      </label><label class="form-label" for="form3Example1c" style="color:red;">*</label>
+                      <input type="text" name="pracfullmark" value="30" class="form-control">
+                    </div>&#160 &#160
+                    <div class="form-outline flex-fill mb-4">
+                      <label class="form-label" for="form3Example1c" style="color:green;">Prac Obt Marks</label><label class="form-label" for="form3Example1c" style="color:red;">*</label>
+                      <input type="text" name="pracobtmark" id="marks1" onblur="totalmarks();" class="form-control">
+                    </div>&#160 &#160 
+                     </div>
+          <!-----2nd Row---->      
+                    <div class="d-flex flex-row align-items-center mb-0">                     
+                    <div class="form-outline flex-fill mb-4">
+                      <label class="form-label" for="form3Example1c"style="color:green;">Total Marks</label><label class="form-label" for="form3Example1c" style="color:red;">*</label>
+                      <input type="text" name="totalmark" readonly="readonly" id="tot" class="form-control">                 
+                    </div>&#160 &#160
+                    <div class="form-outline flex-fill mb-4">
+                      <label class="form-label" for="form3Example1c"style="color:green;">Result</label><label class="form-label" for="form3Example1c" style="color:red;">*</label>
+                      <input type="text" name="result" class="form-control">                 
+                    </div>&#160 &#160
+                    <div class="form-outline flex-fill mb-4">
+                      <label class="form-label" for="form3Example1c"style="color:green;">CGPA</label><label class="form-label" for="form3Example1c" style="color:red;">*</label>
+                      <input type="text" name="CGPA" class="form-control">                 
+                    </div>&#160 &#160
+                   <div class="d-flex flex-row align-items-center mb-0">
+                      <div class="form-outline flex-fill mb-4">
+                      <label class="form-label" for="form3Example1c"style="color:green;">Result Date</label><label class="form-label" for="form3Example1c" style="color:red;">*</label>
+                      <input type="date" name="resultdate" class="form-control">
+                    </div>&#160 &#160 &#160 &#160
+                    <div class="form-outline flex-fill mb-4">
+                      <label class="form-label" for="form3Example1c"style="color:green;">Email Id</label><label class="form-label" for="form3Example1c" style="color:red;">*</label>
+                      <input type="email" name="emailid" class="form-control">
+                    </div>
+                    <div class="d-flex justify-content-center mx-4 mb-3 mb-lg-4">
+                    <input class="btn bg-danger rounded rounded-4 p-1" style="color:white; font-size:25px;" type="submit" value="Submit">
+                  </div>
+                </div>
+              </div>
+               </form>
+              </div>
+        
+       
+<!-----End of New Entry--------->
+
+<!----------Enroll Student-------->
+<script type="text/javascript">
+ function validationenroll() 
+  {
+    var rollno=document.f1.rollno.value;
+    var rollno1=document.f1.rollno1.value;
+    var name=document.f1.name.value;
+    var name1=document.f1.name1.value;
+    var father=document.f1.father.value;
+    var father1=document.f1.father1.value;
+    var emailid1=document.f1.emailid1.value;
+    var emailid=document.f1.emailid.value;
+    var password1=document.f1.password1.value;
+    var password=document.f1.password.value; 
+    var mobileno=document.f1.mobileno.value;
+    var dob=document.f1.dob.value;
+    var doa=document.f1.doa.value;
+    var gender=document.f1.gender.value;
+    var space2= /\s/g;
+    var check2= space2.test(password1);
+    var space3= /\s/g;
+    var check3= space3.test(rollno);
+    
+
+  if (rollno=="")
+  {
+    alert("Please enter your Roll No.");
+    document.f1.rollno.focus();
+    return false;
+  }
+  if(check3)
+    {
+      alert("Space not Allowed");
+      document.f1.rollno.focus();
+      return false;
+    }
+
+  if (rollno1=="")
+  {
+    alert("Please Re-Enter your Roll No.");
+    document.f1.rollno1.focus();
+    return false;
+  }
+
+  if(rollno!=rollno1)
+    {
+      alert("Emaid does not match");
+      document.f1.rollno.value="";
+      document.f1.rollno1.value="";
+      document.f1.rollno.focus();
+      return false;
+    }
+
+  if (name=="")
+  {
+    alert("Please enter your First Name");
+    document.f1.name.focus();
+    return false;
+  }
+  if(!/^[a-zA-Z]*$/g.test(document.f1.name.value))
+    {
+      alert("Enter Alphabet Only");
+      document.f1.name.value="";
+      document.f1.name.focus();
+      return false;
+    }
+  if (name1=="")
+  {
+    alert("Please enter your Last Name");
+    document.f1.name1.focus();
+    return false;
+  }
+  if(!/^[a-zA-Z]*$/g.test(document.f1.name1.value))
+    {
+      alert("Enter Alphabet Only");
+      document.f1.name1.value="";
+      document.f1.name1.focus();
+      return false;
+    }
+
+ if (father=="")
+  {
+    alert("Please enter your Father First Name");
+    document.f1.father.focus();
+    return false;
+  }
+
+  if(!/^[a-zA-Z]*$/g.test(document.f1.father.value))
+    {
+      alert("Enter Alphabet Only");
+      document.f1.father.value="";
+      document.f1.father.focus();
+      return false;
+    }
+
+  if (father1=="")
+  {
+    alert("Please enter your Father Last Name");
+    document.f1.father1.focus();
+    return false;
+  }
+
+  if(!/^[a-zA-Z]*$/g.test(document.f1.father1.value))
+    {
+      alert("Enter Alphabet Only");
+      document.f1.father1.value="";
+      document.f1.father1.focus();
+      return false;
+    }
+
+  if(emailid1=="")
+    {
+      alert("Please enter Email-ID");
+      document.f1.emailid1.focus();
+      return false;
+    }
+
+    if(emailid=="")
+    {
+      alert("Please Re-enter Email-ID");
+      document.f1.emailid.focus();
+      return false;
+    }
+
+    if(emailid1!=emailid)
+    {
+      alert("Emaid does not match");
+      document.f1.emailid1.value="";
+      document.f1.emailid.value="";
+      document.f1.emailid1.focus();
+      return false;
+    }
+  
+    if (password1=="")
+    {
+      alert("Please enter Password");
+      document.f1.password1.focus();
+      return false;
+    }
+    if(check2)
+    {
+      alert("Space not Allowed");
+      document.f1.password1.focus();
+      return false;
+    }
+
+    if (password=="")
+    {
+      alert("Please Re-enter Password");
+      document.f1.password.focus();
+      return false;
+    }
+
+    if(password1!=password)
+    {
+      alert("Password does not match");
+      document.f1.password1.value="";
+      document.f1.password.value="";
+      document.f1.password1.focus();
+      return false;
+    }
+
+    if (mobileno=="")
+  {
+    alert("Please enter your Mobile Number");
+    document.f1.mobileno.focus();
+    return false;
+  }
+
+    if(isNaN(mobileno))
+    {
+      alert("Enter Numeric value");
+      document.f1.mobileno.value="";
+      document.f1.mobileno.focus();
+      return false
+    }
+      
+      if (dob=="")
+     {
+    alert("Please enter your Date of Birth");
+    document.f1.dob.focus();
+    return false;
+     }
+
+     if (doa=="")
+     {
+    alert("Please enter your Date of Addmission");
+    document.f1.doa.focus();
+    return false;
+     }
+     if (gender=="")
+
+     {
+    alert("Please select Your Gender");
+    return false;
+     }
+  }
+</script>
+
+<form name="f1" id="enrollstu" action="signuptask" method="POST" onsubmit="return validationenroll();">
+  {% csrf_token %}
+                
+  <div class="container-sm bg-warning border-1 rounded rounded-4 pt-2 w-75">
+                  <div class="d-flex flex-row align-items-center mb-0">
+                    <div class="form-outline flex-fill mb-4">
+                      <label class="form-label" for="form3Example1c" style="color:green;">Roll No</label><label class="form-label" for="form3Example1c" style="color:red;">*</label>
+                      <input type="text" name="rollno" class="form-control">
+                    </div>&#160 &#160
+                    <div class="form-outline flex-fill mb-4">
+                      <label class="form-label" for="form3Example1c" style="color:green;"> Confirm Roll No</label><label class="form-label" for="form3Example1c" style="color:red;">*</label>
+                      <input type="text" name="rollno1" class="form-control">
+                    </div>&#160 &#160
+                    <div class="form-outline flex-fill mb-4">
+                      <label class="form-label" for="form3Example1c" style="color:green;">Fist Name</label><label class="form-label" for="form3Example1c" style="color:red;">*</label>
+                      <input type="text" name="name" class="form-control">
+                    </div>&#160 &#160
+                    <div class="form-outline flex-fill mb-4">
+                      <label class="form-label" for="form3Example1c" style="color:green;">Last Name</label><label class="form-label" for="form3Example1c" style="color:red;">*</label>
+                      <input type="text" name="name1" class="form-control">
+                    </div>&#160 &#160
+                  <div class="d-flex flex-row align-items-center mb-0">
+                    <div class="form-outline flex-fill mb-4">
+                      <label class="form-label" for="form3Example1c" style="color:green;">Father First Name</label><label class="form-label" for="form3Example1c" style="color:red;">*</label>
+                      <input type="text" name="father" class="form-control">
+                    </div>&#160 &#160
+                  </div>
+                </div>
+          <!-----first Row---->
+                     <div class="d-flex flex-row align-items-center mb-0">
+                      <div class="form-outline flex-fill mb-4">
+                      <label class="form-label" for="form3Example1c" style="color:green;">Father Last Name</label><label class="form-label" for="form3Example1c" style="color:red;">*</label>
+                      <input type="text" name="father1" class="form-control">
+                    </div>&#160 &#160 
+                     <div class="form-outline flex-fill mb-4">
+                      <label class="form-label" for="form3Example1c" style="color:green;">Email ID</label><label class="form-label" for="form3Example1c" style="color:red;">*</label>
+                      <input type="email" name="emailid1" class="form-control">
+                    </div>&#160 &#160
+                  <div class="d-flex flex-row align-items-center mb-0">
+                    <div class="form-outline flex-fill mb-4">
+                      <label class="form-label" for="form3Example1c" style="color:green;">Confirm Email ID</label><label class="form-label" for="form3Example1c" style="color:red;">*</label>
+                      <input type="email" name="emailid" class="form-control">
+                    </div>&#160 &#160
+                    <div class="form-outline flex-fill mb-4">
+                      <label class="form-label" for="form3Example1c" style="color:green;">Password</label><label class="form-label" for="form3Example1c" style="color:red;">*</label>
+                      <input type="password" name="password1" class="form-control">
+                    </div>&#160 &#160
+                    <div class="form-outline flex-fill mb-4">
+                      <label class="form-label" for="form3Example1c" style="color:green;">Confirm Password</label><label class="form-label" for="form3Example1c" style="color:red;">*</label>
+                      <input type="password" name="password" class="form-control">
+                    </div>&#160 &#160  
+                  </div>
+                </div>
+          <!-----2nd Row---->      
+                    <div class="d-flex flex-row align-items-center mb-0">
+                      <div class="form-outline flex-fill mb-4">
+                      <label class="form-label" for="form3Example1c" style="color:green;">
+                      Mobile Number
+                      </label><label class="form-label" for="form3Example1c" style="color:red;">*</label>
+                      <input type="text" name="mobileno" style="width:230px;" class="form-control">
+                    </div>&#160 &#160
+                      <div class="form-outline flex-fill mb-4">
+                      <label class="form-label" for="form3Example1c"style="color:green;">Date Of Birth</label><label class="form-label" for="form3Example1c" style="color:red;">*</label>
+                      <input type="date" min='1980-01-01' max='2002-12-31' name="dob" class="form-control">                     
+                    </div>
+                    <div class="form-outline flex-fill ml-5">
+                      <input class="form-check-input" type="radio" name="gender" value="Male">
+                      <label class="form-check-label" style="color:green;">
+                        <i class='fa fa-male' style="color:red;"></i> Male &#160 &#160 &#160 </label>
+                         <input class="form-check-input" type="radio" name="gender" value="Female">
+                      <label class="form-check-label"style="color:green;">
+                         <i class="fa fa-female" aria-hidden="true" style="color:red;"></i> Female
+                         </label>
+                       </div>
+                       <div class="d-flex justify-content-center mx-4  mb-lg-4">
+                    <input class="btn bg-danger rounded rounded-4 p-1" style="color:white; font-size:25px;" type="submit" value="Enroll Student">
+                  </div>
+                  </div>
+                </div>
+                  
+                  </div>
+                </form>
+            </table>
+
+<script type="text/javascript">
+ function validationfac() 
+  {
+    var name=document.f11.name.value;
+    var emailid1=document.f11.emailid1.value;
+    var emailid=document.f11.emailid.value;
+    var password1=document.f11.password1.value;
+    var password=document.f11.password.value; 
+    var mobileno=document.f11.mobileno.value;
+    var subject=document.f11.subject.value;
+    var space4= /\s/g;
+    var check4= space4.test(password1);
+  
+
+  if (name=="")
+  {
+    alert("Please enter Name");
+    document.f11.name.focus();
+    return false;
+  }
+
+  if(emailid1=="")
+    {
+      alert("Please enter Email-ID");
+      document.f11.emailid1.focus();
+      return false;
+    }
+
+    if(emailid=="")
+    {
+      alert("Please Re-enter Email-ID");
+      document.f11.emailid.focus();
+      return false;
+    }
+
+    if(emailid1!=emailid)
+    {
+      alert("Emaid does not match");
+      document.f11.emailid1.value="";
+      document.f11.emailid.value="";
+      document.f11.emailid1.focus();
+      return false;
+    }
+  
+    if (password1=="")
+    {
+      alert("Please enter Password");
+      document.f11.password1.focus();
+      return false;
+    }
+    if(check4)
+    {
+      alert("Space Not Allowed");
+      document.f11.password1.focus();
+      return false;
+    }
+
+    if (password=="")
+    {
+      alert("Please Re-enter Password");
+      document.f11.password.focus();
+      return false;
+    }
+
+    if(password1!=password)
+    {
+      alert("Password does not match");
+      document.f11.password1.value="";
+      document.f11.password.value="";
+      document.f11.password1.focus();
+      return false;
+    }
+
+    if (mobileno=="")
+  {
+    alert("Please enter Mobile Number");
+    document.f11.mobileno.focus();
+    return false;
+  }
+
+    if(isNaN(mobileno))
+    {
+      alert("Enter Numeric value");
+      document.f11.mobileno.value="";
+      document.f11.mobileno.focus();
+      return false
+    }
+    if (subject=="")
+  {
+    alert("Please enter Subject");
+    document.f11.subject.focus();
+    return false;
+  }
+    
+  }
+</script>
+
+<form name="f11" id="enrollfac" action="facenroll" method="POST" onsubmit="return validationfac();">
+  {% csrf_token %}
+                
+  <div class="container-sm bg-warning border-1 rounded rounded-4 pt-2 w-50">
+                  <div class="d-flex flex-row align-items-center mb-0">
+                    <div class="form-outline flex-fill mb-4">
+                      <label class="form-label" for="form3Example1c" style="color:green;">Name</label><label class="form-label" for="form3Example1c" style="color:red;">*</label>
+                      <input type="text" name="name" class="form-control">
+                    </div>&#160 &#160
+                    <div class="form-outline flex-fill mb-4">
+                      <label class="form-label" for="form3Example1c" style="color:green;">Email ID</label><label class="form-label" for="form3Example1c" style="color:red;">*</label>
+                      <input type="email" name="emailid1" class="form-control">
+                    </div>&#160 &#160
+                  <div class="d-flex flex-row align-items-center mb-0">
+                    <div class="form-outline flex-fill mb-4">
+                      <label class="form-label" for="form3Example1c" style="color:green;">Confirm Email ID</label><label class="form-label" for="form3Example1c" style="color:red;">*</label>
+                      <input type="email" name="emailid" class="form-control">
+                    </div>&#160 &#160
+                    <div class="form-outline flex-fill mb-4">
+                      <label class="form-label" for="form3Example1c" style="color:green;">Password</label><label class="form-label" for="form3Example1c" style="color:red;">*</label>
+                      <input type="password" name="password1" class="form-control">
+                    </div>
+                  </div>
+                </div>
+          <!-----first Row---->
+                     <div class="d-flex flex-row align-items-center mb-0"> 
+                    &#160 &#160
+                    <div class="form-outline flex-fill mb-4">
+                      <label class="form-label" for="form3Example1c" style="color:green;">Confirm Password</label><label class="form-label" for="form3Example1c" style="color:red;">*</label>
+                      <input type="password" name="password" class="form-control">
+                    </div>&#160 &#160
+                   
+                    <div class="form-outline flex-fill mb-4">
+                      <label class="form-label" for="form3Example1c" style="color:green;">
+                      Mobile Number
+                      </label><label class="form-label" for="form3Example1c" style="color:red;">*</label>
+                      <input type="text" name="mobileno" class="form-control">
+                    </div>&#160 &#160
+                    <div class="form-outline flex-fill mb-4">
+                      <label class="form-label" for="form3Example1c" style="color:green;">
+                      Subject
+                      </label><label class="form-label" for="form3Example1c" style="color:red;">*</label>
+                      <input type="text" name="subject" class="form-control">
+                    </div>&#160 &#160
+                    <div class="d-flex justify-content-center mx-4 mb-3 mb-lg-4">
+                    <input class="btn bg-danger rounded rounded-4 p-1" style="color:white; font-size:25px; margin-top: 15px;" type="submit" value="Enroll Faculty">
+                  </div>
+                  </div>
+                  </div>
+                </form>
+
+
+<script type="text/javascript">
+ function validationadmin() 
+  {
+    var name=document.f111.name.value;
+    var emailid1=document.f111.emailid1.value;
+    var emailid=document.f111.emailid.value;
+    var password1=document.f111.password1.value;
+    var password=document.f111.password.value; 
+    var mobileno=document.f111.mobileno.value;
+    var space5= /\s/g;
+    var check5= space5.test(password1);
+
+  if (name=="")
+  {
+    alert("Please enter Name");
+    document.f111.name.focus();
+    return false;
+  }
+
+  if(emailid1=="")
+    {
+      alert("Please enter Email-ID");
+      document.f111.emailid1.focus();
+      return false;
+    }
+
+    if(emailid=="")
+    {
+      alert("Please Re-enter Email-ID");
+      document.f111.emailid.focus();
+      return false;
+    }
+
+    if(emailid1!=emailid)
+    {
+      alert("Emaid does not match");
+      document.f111.emailid1.value="";
+      document.f111.emailid.value="";
+      document.f111.emailid1.focus();
+      return false;
+    }
+  
+    if (password1=="")
+    {
+      alert("Please enter Password");
+      document.f111.password1.focus();
+      return false;
+    }
+    if (check5)
+    {
+      alert("Space not Allowed");
+      document.f111.password1.focus();
+      return false;
+    }
+
+    if (password=="")
+    {
+      alert("Please Re-enter Password");
+      document.f111.password.focus();
+      return false;
+    }
+
+    if(password1!=password)
+    {
+      alert("Password does not match");
+      document.f111.password1.value="";
+      document.f111.password.value="";
+      document.f111.password1.focus();
+      return false;
+    }
+
+    if (mobileno=="")
+  {
+    alert("Please enter Mobile Number");
+    document.f111.mobileno.focus();
+    return false;
+  }
+
+    if(isNaN(mobileno))
+    {
+      alert("Enter Numeric value");
+      document.f111.mobileno.value="";
+      document.f111.mobileno.focus();
+      return false
+    }
+  }
+</script>
+
+<form name="f111" id="addadmin" action="adminenroll" method="POST" onsubmit="return validationadmin();">
+  {% csrf_token %}               
+                  <div class="container-sm bg-warning border-1 rounded rounded-4 pt-2 w-50">
+                  <div class="d-flex flex-row align-items-center mb-0">
+                    <div class="form-outline flex-fill mb-4">
+                      <label class="form-label" for="form3Example1c" style="color:green;">Name</label><label class="form-label" for="form3Example1c" style="color:red;">*</label>
+                      <input type="text" name="name" class="form-control">
+                    </div>&#160 &#160
+                    <div class="form-outline flex-fill mb-4">
+                      <label class="form-label" for="form3Example1c" style="color:green;">Email ID</label><label class="form-label" for="form3Example1c" style="color:red;">*</label>
+                      <input type="email" name="emailid1" class="form-control">
+                    </div>&#160 &#160
+                  <div class="d-flex flex-row align-items-center mb-0">
+                    <div class="form-outline flex-fill mb-4">
+                      <label class="form-label" for="form3Example1c" style="color:green;">Confirm Email ID</label><label class="form-label" for="form3Example1c" style="color:red;">*</label>
+                      <input type="email" name="emailid" class="form-control">
+                    </div>&#160 &#160
+                    <div class="form-outline flex-fill mb-4">
+                      <label class="form-label" for="form3Example1c" style="color:green;">Password</label><label class="form-label" for="form3Example1c" style="color:red;">*</label>
+                      <input type="password" name="password1" class="form-control">
+                    </div>
+                  </div>
+                </div>
+          <!-----first Row---->
+                     <div class="d-flex flex-row align-items-center mb-0"> 
+                    &#160 &#160
+                    <div class="form-outline flex-fill mb-4">
+                      <label class="form-label" for="form3Example1c" style="color:green;">Confirm Password</label><label class="form-label" for="form3Example1c" style="color:red;">*</label>
+                      <input type="password" name="password" class="form-control">
+                    </div>&#160 &#160
+                   
+                    <div class="form-outline flex-fill mb-4">
+                      <label class="form-label" for="form3Example1c" style="color:green;">
+                      Mobile Number
+                      </label><label class="form-label" for="form3Example1c" style="color:red;">*</label>
+                      <input type="text" name="mobileno" class="form-control">
+                    </div>&#160 &#160
+                    <div class="d-flex justify-content-center mx-4 mb-3 mb-lg-4">
+                    <input class="btn bg-danger rounded rounded-4 p-1" style="color:white; font-size:25px; margin-top: 15px;" type="submit" value="Add Admin">
+                  </div>
+                  </div>
+                  </div>
+                </form>
+                <div id="course">
+                 {% include 'admcourse.html' %}
+               </div>
+               <div id="contact">
+                 {% include 'admcontact.html' %}
+               </div>
+               <div id="info">
+                {% include 'admininfo.html' %}
+               </div>
+               <div id="profile">
+                  {% for i in adm2 %}
+ <div class="container-fluid ml-5" id="admprofile" style="padding-left:2px; width: 700px; padding-top: 5px">
+ <div class="col-8 p-1">
+    <div class="row d-flex justify-content-center align-items-left">
+        <div class="card text-black " style="border-radius: 25px; background-color:#858755;">
+              <p class="text-center h1 fw-bold mb-1 mx-1 mx-md-1 mt-1 pb-2" style="color:white;">Your Profile</p>                
+                  <table class="table" style="background-color:#465152; border-radius:20px;">
+                    <tr>
+                      <td class="profile">Name</td>
+                      <td class="profile">:-</td>
+                      <td class="profiledata"> {{i.name}}</td>
+                    </tr>
+                    <tr>
+                      <td class="profile">Email ID:-</td>
+                      <td class="profile">:-</td>
+                      <td class="profiledata">{{i.email}}</td>
+                    </tr>
+                    <tr>
+                      <td class="profile">Mobile Number</td>
+                      <td class="profile">:-</td>
+                      <td class="profiledata">{{i.mobileno}}</td>
+                    </tr>
+                     <tr>
+                      <td class="profile">Image</td>
+                      <td class="profile">:-</td>
+                      <td class="profiledata"><img style="border-radius: 10px; margin-bottom: 10px;" width="80px" src={{i.image}}> </td>
+                    </tr>
+                    <tr>
+                      <td colspan="3" align="center">
+                      <a href="/modadm?email={{i.email}}"> <input  class="btn btn-success btn-outline-warning"
+                       style="color:white;" type="submit" name="" Value="Update"> </a></td>
+                    </tr>                   
+                  </table>
+                  {% endfor %}
+               </div>        
+            </div>
+          </form>
+      </div>
+   </nav>
+</div>
+</div>
+
+<marquee behavior="alternate" scrollamount="10" style="color:red;">
+   <h1>Welcome to Admin Pannel </h1></marquee> 
+   <div>     
+{%  endblock %}

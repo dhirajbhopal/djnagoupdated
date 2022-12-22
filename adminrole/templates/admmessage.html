@@ -1,0 +1,17 @@
+{% extends 'default.html' %}
+ {% block menu1 %}
+        <li class="nav-item active">
+          <a class="nav-link active" aria-current="page" href="javascript:history.back()"><i class="fa fa-arrow-left" aria-hidden="true" style="color:red;"></i> Back</a>
+        </li>
+        {% endblock %}  
+{% block content %} {% endblock %}
+{% block contact %} {% endblock %}
+{% block course %} {% endblock %}
+{% load static %}
+{% block title %} Password{% endblock %}
+ {% block mess %}
+ <h1 align="center" style="color: green; padding-top:10px;" > Record updated Successfully </h1>
+
+ {% endblock %}
+
+

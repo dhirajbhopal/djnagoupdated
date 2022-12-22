@@ -1,0 +1,223 @@
+{% extends 'default.html' %}
+{% block title %} Update {% endblock %}
+ {% block menu1 %}
+        <li class="nav-item active">
+          <a class="nav-link active" aria-current="page" href="javascript:history.back()"><i class="fa fa-arrow-left" aria-hidden="true" style="color:red;"></i> Back</a>
+        </li>
+        {% endblock %}
+{% block content %} {% endblock %}
+{% block contact %} {% endblock %}
+{% block course %} {% endblock %}
+{% load static %}
+{% block updatestuinadm %}
+<script type="text/javascript">
+  function validationfac() 
+  {
+    var rollno=document.f1.rollno.value;
+    var name=document.f1.name.value;
+    var name1=document.f1.name1.value;
+    var father=document.f1.father.value;
+    var father1=document.f1.father1.value;
+    var emailid=document.f1.emailid.value;
+    var mobileno=document.f1.mobileno.value;
+    var dob=document.f1.dob.value;
+    var address=document.f1.address.value;
+
+   
+    if(emailid=="")
+    {
+      alert("Please Enter Email-ID");
+      document.f1.emailid.focus();
+      return false;
+    }
+    if(rollno=="")
+    {
+      alert("Please Re-enter Rollno");
+      document.f1.rollno.focus();
+      return false;
+    }
+
+  if (name=="")
+  {
+    alert("Please enter your First Name");
+    document.f1.name.focus();
+    return false;
+  }
+
+  if(!/^[a-zA-Z]*$/g.test(document.f1.name.value))
+    {
+      alert("Enter Alphabet Only");
+      document.f1.name.value="";
+      document.f1.name.focus();
+      return false;
+    }
+  if (name1=="")
+  {
+    alert("Please enter your Last Name");
+    document.f1.name1.focus();
+    return false;
+  }
+  if(!/^[a-zA-Z]*$/g.test(document.f1.name1.value))
+    {
+      alert("Enter Alphabet Only");
+      document.f1.name1.value="";
+      document.f1.name1.focus();
+      return false;
+    }
+
+ if (father=="")
+  {
+    alert("Please enter your Father First Name");
+    document.f1.father.focus();
+    return false;
+  }
+
+  if(!/^[a-zA-Z]*$/g.test(document.f1.father.value))
+    {
+      alert("Enter Alphabet Only");
+      document.f1.father.value="";
+      document.f1.father.focus();
+      return false;
+    }
+
+  if (father1=="")
+  {
+    alert("Please enter your Father Last Name");
+    document.f1.father1.focus();
+    return false;
+  }
+
+  if(!/^[a-zA-Z]*$/g.test(document.f1.father1.value))
+    {
+      alert("Enter Alphabet Only");
+      document.f1.father1.value="";
+      document.f1.father1.focus();
+      return false;
+    }
+
+
+    if (mobileno=="")
+  {
+    alert("Please enter your Mobile Number");
+    document.f1.mobileno.focus();
+    return false;
+  }
+
+    if(isNaN(mobileno))
+    {
+      alert("Enter Numeric value");
+      document.f1.mobileno.value="";
+      document.f1.mobileno.focus();
+      return false
+    }
+      
+      if (dob=="")
+     {
+    alert("Please enter your Date of Birth");
+    document.f1.dob.focus();
+    return false;
+     }
+
+     if (address=="")
+     {
+    alert("Please enter Your Address");
+    document.f1.address.focus();
+    return false;
+     }
+      
+   }
+</script>
+  <div class="container-fluid w-50 pt-1">
+  {% for i in modstu %}
+  <form name="f1" action="/updaetstu?email={{i.email}}" method="POST" onsubmit="return validationfac();">
+    {% csrf_token %}              
+      <div class="row d-flex justify-content-center align-items-center">
+        <div class="card text-black" style="border-radius: 25px; background-color:#858755;">
+            <p class="text-center h1 fw-bold" style="color:white;">Update Profile</p>
+                  <table style="background-color:#465152; border-radius: 20px;">
+                    <tr>
+                      <td class="profile">Enrollment No</td>
+                      <td class="profile">:-</td>
+                      <td class="profiledata"> 
+                      <input type="text" name="rollno" style="color: green; font-size: 20px; width: 300px;" value="{{i.rollno}}" class="form-control">
+                      </td>
+                    </tr>
+                    <tr>
+                      <td class="profile">First Name</td>
+                      <td class="profile">:-</td>
+                      <td class="profiledata"> 
+                      <input type="text" name="name" style="color: green; font-size: 20px; width: 300px;" value="{{i.name}}" class="form-control">
+                      </td>
+                    </tr>
+                    <tr>
+                      <td class="profile">Last Name</td>
+                      <td class="profile">:-</td>
+                      <td class="profiledata"> 
+                      <input type="text" name="name1" style="color: green; font-size: 20px; width: 300px;" value="{{i.lastname}}" class="form-control">
+                      </td>
+                    </tr>
+                    <tr>
+                      <td class="profile">Father First Name</td>
+                      <td class="profile">:-</td>
+                      <td class="profiledata"> 
+                      <input type="text" name="father" style="color: green; font-size: 20px; width: 300px;" value="{{i.fathername}}" class="form-control">
+                      </td>
+                    </tr>
+                    <tr>
+                      <td class="profile">Father Last Name</td>
+                      <td class="profile">:-</td>
+                      <td class="profiledata"> 
+                      <input type="text"  name="father1" style="color: green; font-size: 20px; width: 300px;" value="{{i.fatherlastname}}" class="form-control">
+                      </td>
+                    </tr>
+                    <tr>
+                      <td class="profile">Mobile Number</td>
+                      <td class="profile">:-</td>
+                      <td class="profiledata"> 
+                      <input type="text" name="mobileno" style="color: green; font-size: 20px; width: 300px;" value="{{i.mobileno}}" class="form-control">
+                      </td>
+                    </tr>
+                    <tr>
+                      <td class="profile">Email id</td>
+                      <td class="profile">:-</td>
+                      <td class="profiledata"> 
+                      <input type="text" name="emailid" style="color: green; font-size: 20px; width: 300px;" value="{{i.email}}" class="form-control">
+                      </td>
+                    </tr>
+                    <tr>
+                      <td class="profile">DOB</td>
+                      <td class="profile">:-</td>
+                      <td class="profiledata" colspan="2"> 
+                      <input type="text" readonly="readonly" style="color: green; font-size: 20px; width: 300px;"class="form-control" value="{{i.dob}}" placeholder="Date of Birth" /> 
+                      <input type="date" name="dob" style="color: green; font-size: 20px; width: 300px;"class="form-control">
+                      </td>
+                    </tr>
+                    <tr>
+                      <td class="profile">DOA</td>
+                      <td class="profile">:-</td>
+                      <td class="profiledata" colspan="2"> 
+                      <input type="text" readonly="readonly" style="color: green; font-size: 20px; width: 300px;"class="form-control" value="{{i.doa}}" placeholder="Date of Addimission" /> 
+                      <input type="date" name="doa" style="color: green; font-size: 20px; width: 300px;"class="form-control">
+                      </td>
+                    </tr>
+                    <tr>
+                      <td class="profile">Address</td>
+                      <td class="profile">:-</td>
+                      <td class="profiledata"> 
+                      <input type="text" name="address" style="color: green; font-size: 20px; width: 300px;" class="form-control" value="{{i.address}}" placeholder="Re-Enter Password">
+                      </td>
+                    </tr>
+                    </tr>
+                    <tr>
+                      <td colspan="3" align="center">
+                      <input  class="btn btn-success btn-outline-warning mb-2"
+                       style="color:white;" type="submit" name="" Value="Update"></td>
+                    </tr> 
+                  </table>
+                    </div>
+                  </div>
+                </form>
+              </div>
+              <br>
+{% endfor %}     
+{% endblock %}

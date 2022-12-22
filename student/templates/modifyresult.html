@@ -1,0 +1,333 @@
+{% extends 'default.html' %}
+ {% block menu1 %}
+        <li class="nav-item active">
+          <a class="nav-link active" aria-current="page" href="javascript:history.back()"><i class="fa fa-arrow-left" aria-hidden="true" style="color:red;"></i> Back</a>
+        </li>
+        {% endblock %}
+{% block content %} {% endblock %}
+{% block contact %} {% endblock %}
+{% block course %} {% endblock %}
+{% load static %}
+{% block facprofile %} {% endblock %}
+{% block updatestuinadm %} {% endblock %}
+      <!-------FA Icon Link-->
+{% block title %} Update {% endblock %}
+  {% block modifyres %}
+  <script type="text/javascript">
+ function validation6() 
+  {
+    var rollno=document.f6.rollno.value;
+    var branch1=document.f6.branch1.value;
+    var semester=document.f6.semester.value;
+    var subject=document.f6.subject.value;
+    var subjectcode=document.f6.subjectcode.value; 
+    var fullmark=document.f6.fullmark.value;
+    var obtainmark=document.f6.obtainmark.value;
+    var pracfullmark=document.f6.pracfullmark.value;
+    var pracobtmark=document.f6.pracobtmark.value;
+    var totalmark=document.f6.totalmark.value;
+    var result=document.f6.result.value;
+    var CGPA=document.f6.CGPA.value;
+    var resultdate=document.f6.resultdate.value;
+    var space= /\s/g;
+    var check= space.test(rollno);
+
+   if(rollno=="")
+    {
+      alert("Please Enter Roll No");
+      document.f6.rollno.focus();
+      return false;
+    }
+    if(check)
+    {
+      alert("Space not Allowed");
+      document.f6.rollno.focus();
+      return false;
+    }
+
+if (branch1=="")
+  {
+    alert("Please Enter Branch");
+    document.f6.branch1.focus();
+    return false;
+  }
+
+
+  if(semester=="")
+  {
+    alert("Please enter Semester");
+    document.f6.semester.focus();
+    return false;
+  }
+
+
+    if(subject=="")
+  {
+    alert("Please enter Subject");
+    document.f6.subject.focus();
+    return false;
+  }
+   if(subjectcode=="")
+  {
+    alert("Please enter Subject Code");
+    document.f6.subjectcode.focus();
+    return false;
+  }
+
+   if (fullmark=="")
+  {
+    alert("Please enter Full Marks");
+    document.f6.fullmark.focus();
+    return false;
+  }
+
+    if(isNaN(fullmark))
+    {
+      alert("Enter Numeric value");
+      document.f6.fullmark.value="";
+      document.f6.fullmark.focus();
+      return false
+    }
+
+    if (obtainmark=="")
+  {
+    alert("Please enter Ontain Marks");
+    document.f6.obtainmark.focus();
+    return false;
+  }
+
+    if(isNaN(obtainmark))
+    {
+      alert("Enter Numeric value");
+      document.f6.obtainmark.value="";
+      document.f6.obtainmark.focus();
+      return false
+    }
+      
+  if (pracfullmark=="")
+  {
+    alert("Please enter Practical Full Marks");
+    document.f6.pracfullmark.focus();
+    return false;
+  }
+
+    if(isNaN(pracfullmark))
+    {
+      alert("Enter Numeric value");
+      document.f6.pracfullmark.value="";
+      document.f6.pracfullmark.focus();
+      return false
+    }
+      
+    if (pracobtmark=="")
+  {
+    alert("Please enter Pratical Obtain Marks");
+    document.f6.pracobtmark.focus();
+    return false;
+  }
+
+    if(isNaN(pracobtmark))
+    {
+      alert("Enter Numeric value");
+      document.f6.pracobtmark.value="";
+      document.f6.pracobtmark.focus();
+      return false
+    }
+    
+    if (totalmark=="")
+  {
+    alert("Please enter your Total Marks");
+    document.f6.totalmark.focus();
+    return false;
+  }
+
+    if(isNaN(totalmark))
+    {
+      alert("Enter Numeric value");
+      document.f6.totalmark.value="";
+      document.f6.totalmark.focus();
+      return false
+    }
+
+     if (result=="")
+  {
+    alert("Please enter your Fail/Pass");
+    document.f6.result.focus();
+    return false;
+  }
+    
+    if (CGPA=="")
+  {
+    alert("Please enter your CGPA");
+    document.f6.CGPA.focus();
+    return false;
+  }
+
+    if(isNaN(CGPA))
+    {
+      alert("Enter Numeric value");
+      document.f6.CGPA.value="";
+      document.f6.CGPA.focus();
+      return false
+    }
+     if (resultdate=="")
+     {
+    alert("Please enter Date of Result");
+    document.f6.resultdate.focus();
+    return false;
+    }
+  }
+</script>
+
+<script type="text/javascript">
+  function totalmarks() 
+  {
+    var a=document.f6.marks.value;
+    var b=document.f6.marks1.value;
+    var c=parseInt(a);
+    var d=parseInt(b);
+    var e=c+d;
+    document.getElementById("tot").value=e
+    alert("totalmarks added")
+  }
+</script>
+ <div class="container-fluid w-50 pt-1">
+  {% for i in modres %}
+  <form name="f6" action="/modresult?ids={{i.id}}" method="POST" onsubmit="return validation6();">
+    {% csrf_token %}              
+      <div class="row d-flex justify-content-center align-items-center">
+        <div class="card text-black" style="border-radius: 25px; background-color:#858755;">
+            <p class="text-center h1 fw-bold" style="color:white;">Update Profile</p>
+                  <table style="background-color:#465152; border-radius: 20px;">
+                    <tr>
+                      <td class="profile">Id</td>
+                      <td class="profile">:-</td>
+                      <td class="profiledata"> 
+                      <input type="text" readonly="readonly" style="color: red; font-size: 20px; width: 300px;" value={{i.id}} class="form-control">
+                      </td>
+                    </tr>
+                    <tr>
+                      <td class="profile">Roll No</td>
+                      <td class="profile">:-</td>
+                      <td class="profiledata"> 
+                      <input type="text" name="rollno" style="color: green; font-size: 20px; width: 300px;" value="{{i.rollno}}" class="form-control">
+                      </td>
+                    </tr>
+                    <tr>
+                      <td class="profile">Branch</td>
+                      <td class="profile">:-</td>
+                      <td class="profiledata"> 
+                      <input type="text" name="branch1" style="color: green; font-size: 20px; width: 300px;" value="{{i.branch}}" class="form-control">
+                      </td>
+                    </tr>
+                    <tr>
+                      <td class="profile">Semester</td>
+                      <td class="profile">:-</td>
+                      <td class="profiledata"> 
+                       <div class="btn btn-light bg-transparent align-content-start">
+                      <select name="semester">
+                        <option> {{i.semester}}</option>
+                        <option>First(I)</option>
+                        <option>Second(II)</option>
+                        <option>Third(III)</option>
+                        <option>Fourt(IV)</option>
+                        <option>Fifth(v)</option>
+                        <option>Sixth(VI)</option>
+                        <option>Seventh(VII)</option>
+                        <option>Eight(VIII)</option>
+                         <option></option>
+                        </label>
+                      </select>
+                       </div>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td class="profile">Subject</td>
+                      <td class="profile">:-</td>
+                      <td class="profiledata"> 
+                      <input type="text" name="subject" style="color: green; font-size: 20px; width: 300px;"class="form-control" value="{{i.subject}}">
+                      </td>
+                    </tr>
+                    <tr>
+                      <td class="profile">Subject Code</td>
+                      <td class="profile">:-</td>
+                      <td class="profiledata"> 
+                    <input type="text" name="subjectcode" style="color: green; font-size: 20px; width: 300px;" class="form-control" value="{{i.subjectcode}}">
+                      </td>
+                    </tr>
+                    <tr>
+                      <td class="profile">Full Marks</td>
+                      <td class="profile">:-</td>
+                      <td class="profiledata"> 
+                    <input type="text" name="fullmark" style="color: green; font-size: 20px; width: 300px;" class="form-control" value="{{i.fullmark}}">
+                      </td>
+                    </tr>
+                   <tr>
+                      <td class="profile">Obtain Marks</td>
+                      <td class="profile">:-</td>
+                      <td class="profiledata"> 
+                    <input type="text" name="obtainmark" style="color: green; font-size: 20px; width: 300px;" class="form-control" id="marks" value="{{i.obtainmark}}" onblur="return totalmarks();">
+                      </td>
+                    </tr>
+                    <tr>
+                      <td class="profile">Practical Full Marks</td>
+                      <td class="profile">:-</td>
+                      <td class="profiledata"> 
+                    <input type="text" name="pracfullmark" style="color: green; font-size: 20px; width: 300px;" class="form-control" value="{{i.pracfullmark}}">
+                      </td>
+                    </tr>
+                    <tr>
+                      <td class="profile">Practical Obtain Marks</td>
+                      <td class="profile">:-</td>
+                      <td class="profiledata"> 
+                    <input type="text" name="pracobtmark" style="color: green; font-size: 20px; width: 300px;" class="form-control" id="marks1" value="{{i.pracobtmark}}" onblur="return totalmarks();">
+                      </td>
+                    </tr>
+                    <tr>
+                      <td class="profile">Total Marks</td>
+                      <td class="profile">:-</td>
+                      <td class="profiledata"> 
+                    <input type="text" name="totalmark" style="color: green; font-size: 20px; width: 300px;" class="form-control" id="tot" readonly="readonly">
+                      </td>
+                    </tr>
+                    <tr>
+                      <td class="profile">Result</td>
+                      <td class="profile">:-</td>
+                      <td class="profiledata"> 
+                    <input type="text" name="result" style="color: green; font-size: 20px; width: 300px;" class="form-control" value="{{i.result}}">
+                      </td>
+                    </tr>
+                    <tr>
+                      <td class="profile">CGPA</td>
+                      <td class="profile">:-</td>
+                      <td class="profiledata"> 
+                    <input type="text" name="CGPA" style="color: green; font-size: 20px; width: 300px;" class="form-control" value="{{i.CGPA}}">
+                      </td>
+                    </tr>
+                    <tr>
+                      <td class="profile">Result Date</td>
+                      <td class="profile">:-</td>
+                      <td class="profiledata"> 
+                    <input type="date" name="resultdate" style="color: green; font-size: 20px; width: 300px;" class="form-control" value="{{i.resultdate}}">
+                      </td>
+                    </tr>
+                    <tr>
+                      <td class="profile">Email Id</td>
+                      <td class="profile">:-</td>
+                      <td class="profiledata"> 
+                    <input type="email" name="emailid" style="color: green; font-size: 20px; width: 300px;" class="form-control" value="{{i.email}}">
+                      </td>
+                    </tr>
+                    <tr>
+                      <td colspan="3" align="center">
+                      <input  class="btn btn-success btn-outline-warning mb-2"
+                       style="color:white;" type="submit" name="" Value="Update"></td>
+                    </tr> 
+                  </table>
+                    </div>
+                </div>
+              </form>
+            </div>
+            <br>
+{% endfor %}
+{% endblock %}     

@@ -1,0 +1,151 @@
+{% extends 'default.html' %}
+{% load static %}
+ {% block title %} {% for i in rec2 %} Student {{i.name}} {% endfor %} {% endblock %}
+ {% block content %} {% endblock %}
+  {% block menu1 %} {% endblock %}
+ {% block stumenu %}
+{% include 'hidden.html' %}
+  <a href="#" class="active" id="home"><i class="fa fa-home faicon" aria-hidden="true"></i> Home</a>
+  <a href="#" id="btncontact"><i class="fa fa-phone faicon" aria-hidden="true"></i> Contact</a>
+  <a href="#" id="btncourse"><i class="fa fa-book" aria-hidden="true"></i> Courses</a>
+  <a href="#" id="btninfo"><i class="fa fa-info-circle faicon" aria-hidden="true"></i> Info</a>
+  <a href="javascript:void(0);" class="icon" onclick="myFunction()"><i class="fa fa-bars"></i></a>
+   {% for i in rec2 %} 
+  
+    <span style="float: right;"> <a href="#"><img class="rounded-2 m-0 p-0" id="stuimg" src="{{i.image}}" height="23px"></a></span>
+
+    <span style="float: right;" type="button"  data-bs-toggle="dropdown" aria-expanded="false"> <a href="#">{{i.name}} Student</a></span>
+      <ul class="dropdown-menu border-0 text-center rounded rounded-3" style="background-color:#bac7e0">
+      <li><a class="dropdown-item badge-warning rounded rounded-3" id="sturesultbtn" style="color:black; font-size:20px;" href="#">Result</a></li>
+    <li><a class="dropdown-item rounded rounded-3 badge-danger" style="color:black; font-size:20px;" href="#">Fill Exam Form</a></li>
+   <li><a class="dropdown-item rounded rounded-3 badge-danger" style="color:black; font-size:20px;" href="/stupass?email={{i.email}}">Change Password</a></li>
+      <li><form id="logout-form"  method="post" action="/logout_view">
+                {% csrf_token %}
+                    <input type="hidden" name="csrfmiddlewaretoken" value="nVCDd5FQoh6ZNsu1HetcMddtQObFFRRZ20LRzk379SU8p4fewe81Ir4UnYyNQeEs">
+                    <button type="submit" class="dropdown-item rounded rounded-3 badge-danger" style="color:black; font-size:20px;">Log out</button>
+                </form></li>
+        </ul></span>
+        <span style="float: right;"><a href="#" onClick="window.location.reload(true)">Refresh</a></span>     
+        {% endfor %}  
+   {% endblock %}
+   {% block stubody %}
+  {% for i in rec2 %}
+ <div class="container-fluid ml-5" id="stuprofile" style="padding-left:2px; width: 700px; padding-top: 5px">
+ <div class="col-8 p-1">
+    <div class="row d-flex justify-content-center align-items-left">
+        <div class="card text-black " style="border-radius: 25px; background-color:#858755;">
+              <p class="text-center h1 fw-bold mb-1 mx-1 mx-md-1 mt-1 pb-2" style="color:white;">Your Profile</p>                
+                  <table class="table" style="background-color:#465152; border-radius:20px;">
+                    <tr>
+                      <td class="profile" style="width:300px">Roll Number</td>
+                      <td class="profile">:-</td>
+                      <td class="profiledata">{{i.rollno}}</td>
+                    </tr>
+                    <tr>
+                      <td class="profile" style="width:300px">First Name</td>
+                      <td class="profile">:-</td>
+                      <td class="profiledata"> {{i.name}}</td>
+                    </tr>
+                    <tr>
+                      <td class="profile">Last Name:-</td>
+                      <td class="profile">:-</td>
+                      <td class="profiledata">{{i.lastname}}</td>
+                    </tr>
+                    <tr>
+                      <td class="profile">Father First Name:-</td>
+                      <td class="profile">:-</td>
+                      <td class="profiledata">{{i.fathername}}</td>
+                    </tr>
+                    <tr>
+                      <td class="profile">Father Last Name:-</td>
+                      <td class="profile">:-</td>
+                      <td class="profiledata">{{i.fatherlastname}}</td>
+                    </tr>
+                    <tr>
+                      <td class="profile">Email ID:-</td>
+                      <td class="profile">:-</td>
+                      <td class="profiledata">{{i.email}}</td>
+                    </tr>
+                    <tr>
+                      <td class="profile">Mobile Number</td>
+                      <td class="profile">:-</td>
+                      <td class="profiledata">{{i.mobileno}}</td>
+                    </tr>
+                    <tr>
+                      <td class="profile">Date Of Birth</td>
+                      <td class="profile">:-</td>
+                      <td class="profiledata">{{i.dob}}</td>
+                    </tr>
+                     <tr>
+                      <td class="profile">Date Of Addmission</td>
+                      <td class="profile">:-</td>
+                      <td class="profiledata">{{i.doa}}</td>
+                    </tr>
+                    <tr>
+                      <td class="profile">Gender</td>
+                      <td class="profile">:-</td>
+                      <td class="profiledata">{{i.gender}}</td>
+                    </tr>
+                    <tr>
+                      <td class="profile">Image</td>
+                      <td class="profile">:-</td>
+                      <td class="profiledata"> <img style="border-radius: 10px; margin-bottom: 10px;" width="80px" src={{i.image}}> </td>
+                    </tr>
+
+                    <tr>
+                      <td colspan="3" align="center">
+                      <a href="/modstu?email={{i.email}}"><input  class="btn btn-success btn-outline-warning"
+                       style="color:white;" type="submit" name="" Value="Update"> </a></td>
+                    </tr>                
+                  </table>
+                  {% endfor %}
+               </div>        
+            </div>
+      </div>
+</div>
+
+<table id="showmarks" class="table-bordered border-danger container-fluid mt-2" align="center">
+      <tr border="1px" align="center" style="background-color:black; color:white;">
+                      <td> Roll Number </td>
+                      <td>Branch </td>
+                      <td>Semester</td>
+                      <td>Subject</td>
+                      <td>Subject Code</td>
+                      <td>Full Marks</td>
+                      <td>Obtain Marks</td>
+                      <td>Pratical FM</td>
+                      <td>Prac Obt Marks</td>
+                      <td>Total Marks</td>
+                      <td>Result</td>
+                      <td>CGPA</td>
+                      <td>Result Date</td>
+                    </tr>
+                      {% for i in showres %}
+                      <tr border="2" align="center" style="background-color:white; margin: 20px; border-radius:black solid 20px;">  
+                        <td> {{i.rollno}}</td>
+                        <td> {{i.branch}}</td>
+                        <td> {{i.semester}}</td>
+                        <td> {{i.subject}}</td>
+                        <td> {{i.subjectcode}}</td>
+                        <td> {{i.fullmark}}</td>
+                        <td> {{i.obtainmark}}</td>
+                        <td> {{i.pracfullmark}}</td>
+                        <td> {{i.pracobtmark}}</td>
+                        <td> {{i.totalmark}}</td>
+                        <td> {{i.result}}</td>
+                        <td> {{i.CGPA}}</td>
+                        <td> {{i.resultdate}}</td>
+                      </tr>
+                    {% endfor %}  
+                    </table>  
+                  <div id="course">
+                 {% include 'admcourse.html' %}
+               </div>
+               <div id="contact">
+                 {% include 'admcontact.html' %}
+               </div>
+               <div id="info">
+                {% include 'admininfo.html' %}
+               </div>              
+{% endblock %}
+
